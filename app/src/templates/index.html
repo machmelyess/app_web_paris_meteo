@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Météo Île-de-France</title>
+</head>
+<body>
+  <h1>Météo à {{ weather.location.name }}</h1>
+  <p>Température : {{ weather.current.temp_c }}°C</p>
+  <p>Conditions : {{ weather.current.condition.text }}</p>
+  <p>Dernière mise à jour : {{ weather.current.last_updated }}</p>
+</body>
+</html>

@@ -1,0 +1,41 @@
+name: 🚀 Deploy to GKE Météo
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+    - name: ⬇️ Checkout code
+      uses: actions/checkout@v3
+
+    - name: 🔐 Auth GCP via OIDC
+      uses: google-github-actions/auth@v2
+      with:
+        workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+        service_account: ${{ secrets.GCP_SA_EMAIL }}
+
+    - name: ☁️ Setup gcloud CLI
+      uses: google-github-actions/setup-gcloud@v2
+
+    - name: 🐳 Build & Push Docker image
+      run: |
+        docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/weather-app:latest ./app
+        docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/weather-app:latest
+
+    - name: ☸️ Configure kubectl
+      run: |
+        gcloud container clusters get-credentials idf-weather-cluster \
+          --region europe-west1 \
+          --project ${{ secrets.GCP_PROJECT_ID }}
+
+    - name: 🚀 Deploy to GKE
+      run: |
+        kubectl apply -f k8s/deployment.yaml
