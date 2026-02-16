@@ -1,0 +1,33 @@
+[33mcommit fdb10aadbe0220c65cd2a3e302b277562d79cd4a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Elyes <libyatripo51@gmail.com>
+Date:   Mon Feb 16 10:04:50 2026 +0100
+
+    🚀 init projet météo GKE
+
+ .github/workflows/ci_cd/docker_push.sh             |  0
+ .github/workflows/ci_cd/setup_workload_identity.sh |  0
+ .github/workflows/deploy.yml                       | 41 [32m+++++++++++++++++++++++++++++++++++++++++[m
+ .gitignore                                         |  9 [32m+++++++++[m
+ README.md                                          |  0
+ app/Dockerfile                                     |  6 [32m++++++[m
+ app/Makefile                                       | 26 [32m++++++++++++++++++++++++++[m
+ app/config/settings.py                             |  0
+ app/requirements.txt                               |  2 [32m++[m
+ app/src/app.py                                     | 20 [32m++++++++++++++++++++[m
+ app/src/static/style.css                           |  0
+ app/src/templates/index.html                       | 12 [32m++++++++++++[m
+ k8s/deployment.yaml                                | 37 [32m+++++++++++++++++++++++++++++++++++++[m
+ k8s/ingress.yaml                                   |  0
+ provider.tf                                        |  4 [32m++++[m
+ scripts/connect_kubectl.sh                         |  0
+ scripts/init_cluster.sh                            |  0
+ terraform/.terraform.lock.hcl                      | 22 [32m++++++++++++++++++++++[m
+ terraform/env/dev/backend.tf                       |  0
+ terraform/env/dev/terraform.tfvars                 |  3 [32m+++[m
+ terraform/env/prod/backend.tf                      |  0
+ terraform/env/prod/terraform.tfvars                |  0
+ terraform/main.tf                                  | 34 [32m++++++++++++++++++++++++++++++++++[m
+ terraform/modules/gke-cluster/main.tf              |  0
+ terraform/outputs.tf                               |  0
+ terraform/variables.tf                             | 16 [32m++++++++++++++++[m
+ 26 files changed, 232 insertions(+)

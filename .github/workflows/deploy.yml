@@ -16,7 +16,7 @@ jobs:
     - name: ⬇️ Checkout code
       uses: actions/checkout@v3
 
-    - name: 🔐 Auth GCP via OIDC
+    - name: 🔐 Authenticate to Google Cloud
       uses: google-github-actions/auth@v2
       with:
         workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
@@ -30,12 +30,12 @@ jobs:
         docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/weather-app:latest ./app
         docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/weather-app:latest
 
-    - name: ☸️ Configure kubectl
+    - name: ☸️ Configure kubectl with GKE credentials
       run: |
         gcloud container clusters get-credentials idf-weather-cluster \
           --region europe-west1 \
           --project ${{ secrets.GCP_PROJECT_ID }}
 
-    - name: 🚀 Deploy to GKE
+    - name: 🚀 Deploy to GKE with kubectl
       run: |
         kubectl apply -f k8s/deployment.yaml
